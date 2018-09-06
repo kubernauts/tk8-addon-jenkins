@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: jenkins
+  namespace: jenkins
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: master
+    spec:
+      containers:
+        - image: muellermh/jenkins:latest
+          name: jenkins
+          ports:
+            - containerPort: 8080
+              name: http-port
+            - containerPort: 50000
+              name: jnlp-port
+          env:
+            - name: JAVA_OPTS
+              value: -Djenkins.install.runSetupWizard=false

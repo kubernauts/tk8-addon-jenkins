@@ -1,0 +1,59 @@
+# Derived from ./deployments
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: jenkins 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins
+  namespace: jenkins
+spec:
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      name: ui
+  selector:
+    app: master
+  type: NodePort 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-discovery
+  namespace: jenkins
+spec:
+  selector:
+    app: master
+  ports:
+    - protocol: TCP
+      port: 50000
+      targetPort: 50000
+      name: slaves 
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: jenkins
+  namespace: jenkins
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: master
+    spec:
+      containers:
+        - image: muellermh/jenkins:latest
+          name: jenkins
+          ports:
+            - containerPort: 8080
+              name: http-port
+            - containerPort: 50000
+              name: jnlp-port
+          env:
+            - name: JAVA_OPTS
+              value: -Djenkins.install.runSetupWizard=false 
+---
