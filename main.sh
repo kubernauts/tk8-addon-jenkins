@@ -1,4 +1,8 @@
 #!/bin/sh
+
+set -euo pipefail
+#set -x
+
 target="./main.yml"
 rm "$target"
 echo "# Derived from ./deployments" >> "$target"
