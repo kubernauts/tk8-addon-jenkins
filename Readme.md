@@ -20,7 +20,7 @@ Create your own addons for TK8 is easy as well.
 ```
 
 Then you can provide the main.yml with your addon components.
-Also it is possible to add a main.sh file wich runs befor the main.yml is applyed to the cluster. So you can do some more stuff or generate a main.yml from subfolder yaml files.
+Also it is possible to add a main.sh file which runs before the main.yml is applied to the cluster. So you can do some more stuff or generate a main.yml from subfolder yaml files.
 
 To get more support join us on [Slack](https://kubernauts-slack-join.herokuapp.com)
 
